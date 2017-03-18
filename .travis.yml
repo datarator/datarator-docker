@@ -9,7 +9,7 @@ env:
     - VERSION_PATCH=0.2.1
 
 script:
-  - docker build --build-arg VERSION=${VERSION_PATCH} -t datarator/datarator:${VERSION_PATCH} -f Dockerfile.jessie . 
+  - docker build --build-arg VERSION=${VERSION_PATCH} -t datarator/datarator:${VERSION_PATCH} -f Dockerfile.debian . 
   - docker build --build-arg VERSION=${VERSION_PATCH} -t datarator/datarator:${VERSION_PATCH}-alpine -f Dockerfile.alpine . 
   - docker tag datarator/datarator:${VERSION_PATCH} datarator/datarator:latest
   - docker tag datarator/datarator:${VERSION_PATCH} datarator/datarator:${VERSION_MINOR}
