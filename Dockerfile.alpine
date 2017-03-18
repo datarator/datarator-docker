@@ -1,0 +1,19 @@
+FROM alpine:3.5
+
+MAINTAINER Peter Butkovic <butkovic@gmail.com>
+
+ARG VERSION=0.2.1
+ENV VERSION ${VERSION}
+# TODO find out why amd64 doesn't work
+ENV ARCH 386
+ENV PORT 9292
+ENV TIMEOUT 3000
+
+# install datarator
+RUN apk add --no-cache curl && \
+    curl -L https://github.com/datarator/datarator/releases/download/v${VERSION}/datarator_${VERSION}_${ARCH}.apk -o datarator_${VERSION}_${ARCH}.apk && \
+    apk add --no-cache --allow-untrusted datarator_${VERSION}_${ARCH}.apk && \
+    rm -rf datarator_${VERSION}_${ARCH}.apk && \
+	rm -rf /var/cache/apk/*
+
+EXPOSE "$PORT"

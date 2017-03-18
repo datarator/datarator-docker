@@ -1,0 +1,22 @@
+sudo: true
+services:
+    - docker
+
+env:
+  global:
+    - VERSION_MAJOR=0
+    - VERSION_MINOR=0.2
+    - VERSION_PATCH=0.2.1
+
+script:
+  - docker build --build-arg VERSION=${VERSION_PATCH} -t datarator/datarator:${VERSION_PATCH} -f Dockerfile.jessie . 
+  - docker build --build-arg VERSION=${VERSION_PATCH} -t datarator/datarator:${VERSION_PATCH}-alpine -f Dockerfile.alpine . 
+  - docker tag datarator/datarator:${VERSION_PATCH} datarator/datarator:latest
+  - docker tag datarator/datarator:${VERSION_PATCH} datarator/datarator:${VERSION_MINOR}
+  - docker tag datarator/datarator:${VERSION_PATCH}-alpine datarator/datarator:${VERSION_MINOR}-alpine
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push datarator/datarator;
+    fi

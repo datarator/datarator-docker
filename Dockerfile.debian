@@ -1,0 +1,20 @@
+FROM debian:jessie-slim
+
+MAINTAINER Peter Butkovic <butkovic@gmail.com>
+
+ARG VERSION=0.2.1
+ENV VERSION ${VERSION}
+ENV PORT 9292
+ENV TIMEOUT 3000
+
+# install datarator
+RUN apt-get -qq update && \
+    apt-get -qq -yy install curl && \
+    curl -L https://github.com/datarator/datarator/releases/download/v${VERSION}/datarator_${VERSION}_amd64.deb -o datarator_${VERSION}_amd64.deb && \
+    dpkg -i datarator_${VERSION}_amd64.deb && \
+    apt-get clean && \
+    rm -rf datarator_${VERSION}_amd64.deb
+
+EXPOSE "$PORT"
+
+ENTRYPOINT /usr/local/bin/datarator -p "$PORT" -t "$TIMEOUT"
