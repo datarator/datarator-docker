@@ -7,4 +7,4 @@
 
 # What is datarator?
 
-[Datarator](https://github.com/datarator) is a stateless data generator with HTTP based JSON API.
+[Datarator](https://github.com/datarator/datarator) is a stateless data generator with HTTP based JSON API.
